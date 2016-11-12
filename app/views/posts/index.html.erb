@@ -1,0 +1,27 @@
+<div class="container" style="padding:0 10%">
+
+  <h1>Jobs List</h1>
+  <div class="row flex-items-xs-center">
+    <div class="col-xs-6">
+      <%= link_to 'Post a Reuest', new_post_path, class: "btn btn-primary btn-success btn-block" %><br>
+    </div>
+  </div>
+  <% @posts.each do |post| %>
+  <div class="card card-block">
+    <div class="row">
+      <div class="col-xs-8">
+        <h3 class="card-title"><%= post.title %></h3>
+        <h6 class="card-subtitle text-muted"><%= post.category %> • Posted: <%= time_ago_in_words(post.created_at) %> ago </h6>
+        <p class="card-text"><%= post.description.truncate_words(15) %></p>
+      </div>
+      <div class="col-xs-4 flex-xs-middle">
+        <%= link_to post do%>
+        <div class="btn btn-primary float-xs-right">View Job</div>  
+        <% end %>
+      </div>
+    </div>
+  </div> 
+  <% end %> 
+
+</div>
+

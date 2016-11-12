@@ -1,0 +1,13 @@
+<div class="container" style="padding:0 10%">
+  <div class="card card-block">
+    <h4 class="card-title"><%= @post.title %></h4>
+    <h6 class="card-subtitle text-muted"><%= @post.category %> • Posted: <%= time_ago_in_words(@post.created_at) %> ago </h6>
+    <p class="card-text"><%= @post.description %></p>
+    <a href="#" class="card-link">Card link</a>
+    <%= link_to 'Edit', edit_post_path(@post) %> |
+    <% if @post.user_id == current_user.id %>
+    <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %> |
+    <% end %>
+    <%= link_to 'Back', posts_path %>
+  </div>
+</div>
