@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :verify_owner, only: [:edit, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -10,6 +11,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @user = session[:username]
   end
 
   # GET /posts/new
@@ -36,6 +38,8 @@ class PostsController < ApplicationController
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
+        session[:username] = params[:username][:username]
+        p session[:username]
       else
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -60,10 +64,6 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    if (@post.user_id == current_user.id) then 
-      redirect_to root_path 
-      flash[:danger] = "That's not your post!"
-    end else
     @post.destroy
     respond_to do |format|
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
@@ -72,13 +72,25 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:title, :description, :category)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def post_params
+    params.require(:post).permit(:title, :description, :category)
+  end
+
+  def verify_owner
+    if current_user.id != @post.user_id
+      redirect_to root_path 
+      flash[:danger] = "That's not your post!"
     end
   end
+
+
+
+end
+

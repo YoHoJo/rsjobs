@@ -1,4 +1,3 @@
-<div class="container">
 <%= form_for(@post) do |f| %>
 <% if @post.errors.any? %>
 <div id="error_explanation">
@@ -23,7 +22,6 @@
 </div>
 
 <div class="form-group row">
-
   <%= f.label :category, class: "col-xs-2 col-form-label" %>
   <div class="col-xs-10">
     <%= f.select :category, options_for_select(['Firecape' ,'Powerlevel', 'Quest', 'Other']), {}, :class => 'form-control' %>
@@ -31,7 +29,11 @@
 </div>
 
 <div class="form-group row">
+<%= label_tag "Username", 'Username', class: "col-xs-2 col-form-label" %>
+  <div class="col-xs-10"><%= text_field(:username, 'username', class: "form-control") %></div>
+</div>
+
+<div class="form-group row">
     <%= f.submit 'Post Job', class: "btn btn-primary btn-block" %>
 </div>
 <% end %>
-</div>

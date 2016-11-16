@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-xs-8">
         <h3 class="card-title"><%= post.title %></h3>
-        <h6 class="card-subtitle text-muted"><%= post.category %> • Posted: <%= time_ago_in_words(post.created_at) %> ago </h6>
+        <h6 class="card-subtitle text-muted"><%= post.category %> • Posted: <%= time_ago_in_words(post.created_at, include_hours: true) %> ago </h6>
         <p class="card-text"><%= post.description.truncate_words(15) %></p>
       </div>
       <div class="col-xs-4 flex-xs-middle">
