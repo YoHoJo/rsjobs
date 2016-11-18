@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20161108001217) do
     t.text     "description"
     t.string   "category"
     t.integer  "user_id"
+    t.string   "rsn"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

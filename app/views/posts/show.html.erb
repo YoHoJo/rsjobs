@@ -1,7 +1,10 @@
 <div class="container" style="padding:0 10%">
   <div class="card card-block">
     <h4 class="card-title"><%= @post.title %></h4>
-    <h6 class="card-subtitle text-muted"><%= @post.category %> • Posted: <%= time_ago_in_words(@post.created_at) %> ago </h6>
+    <h6 class="card-subtitle text-muted">By: <%= @post.user.username %> • <%= @post.category %> • Posted: <%= time_ago_in_words(@post.created_at) %> ago <br>
+            At:<%= @stats["Attack"][1] %> De:<%= @stats["Defence"][1] %> St:<%= @stats["Strength"][1] %> Ra:<%= @stats["Ranged"][1] %> Pr:<%= @stats["Prayer"][1] %> 
+    </h6>
+
     <p class="card-text"><%= @post.description %></p>
     <%= link_to 'Back', posts_path, class: "btn btn-warning" %>
     <% if @post.user_id == current_user.id %> |
@@ -10,3 +13,5 @@
     <% end %>
   </div>
 </div>
+
+

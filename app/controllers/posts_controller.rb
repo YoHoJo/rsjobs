@@ -12,12 +12,16 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @user = session[:username]
+    @stats = @post.stats if @post.rsn
   end
 
   # GET /posts/new
   def new
     if current_user
       @post = current_user.posts.build
+    else
+      redirect_to root_path 
+      flash[:danger] = "Please register to post!"
     end
   end
 
@@ -38,8 +42,7 @@ class PostsController < ApplicationController
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
-        session[:username] = params[:username][:username]
-        p session[:username]
+        
       else
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -80,7 +83,7 @@ class PostsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def post_params
-    params.require(:post).permit(:title, :description, :category)
+    params.require(:post).permit(:title, :description, :category, :rsn)
   end
 
   def verify_owner
